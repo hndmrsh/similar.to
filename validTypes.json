@@ -1,0 +1,8 @@
+{
+	"types": [
+		"game",
+		"movie",
+		"book",
+		"album"
+	]
+}
