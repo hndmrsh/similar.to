@@ -3,7 +3,7 @@ var pg = require("pg");
 var connectionConfig = require("./config");
 var validTypes = require("./validTypes").types;
 
-exports.lookup = function(itemName, type, callback){
+exports.query = function(itemName, type, callback){
 	var obj;
 	
 	if(validTypes.indexOf(type) == -1){

@@ -10,7 +10,7 @@ exports.query = function(request, response){
 	
 	console.log("Looking up " + itemName + " in table " + type);
 
-	db.lookup(itemName, type, function(result){
+	db.query(itemName, type, function(result){
 		response.writeHead(200, {"Content-Type": "application/json"});
 		response.write(JSON.stringify(result));
 		response.end();
