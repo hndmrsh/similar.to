@@ -6,7 +6,7 @@ var validTypes = require("./validTypes").types;
 exports.lookup = function(itemName, type, callback){
 	var obj;
 	
-	if(validTypes.types.indexOf(type) == -1){
+	if(validTypes.indexOf(type) == -1){
 		obj = {
 			response: 'Type not valid'
 		};
@@ -21,7 +21,7 @@ exports.lookup = function(itemName, type, callback){
 				callback(obj);
 				client.end();
 			} else {
-				var query = client.query('SELECT * FROM ' + type + ' WHERE name = $1', [itemName]);
+				var query = client.query('SELECT * FROM ' + type + ' WHERE lower(name) = lower($1)', [itemName]);
 				
 				query.on('row', function(row){
 					obj = row;
@@ -64,7 +64,8 @@ exports.suggest = function(prefix, callback){
 				if(i > 0){
 					queryString += " UNION ALL ";
 				}
-				queryString += "SELECT *, '" + validTypes[i] + "' AS type FROM " + validTypes[i] + " WHERE name LIKE $1";
+				queryString += "SELECT *, '" + validTypes[i] + "' AS type FROM " + validTypes[i];
+				queryString += " WHERE lower(name) LIKE lower($1)";
 			}
 			queryString += " ORDER BY name";
 			
